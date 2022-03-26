@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CSV to HTML Table</title>
+    <meta name="author" content="Derek Eder">
+    <meta content="Display any CSV file as a searchable, filterable, pretty HTML table">
+
+</head>
+
+<body>
+
+        <div class="container">
+            Text_Value1<input type="text" id="text1" name="text1"><br><br>
+            Text_Value2<input type="text" id="text2" name="text2"><br><br>
+            <input type="submit" value="try" onclick="myFunction()" />
+            <button id="clicked" onclick="myFunction()">Submit</button>
+            <div class="show-data"></div>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+
+<script>
+    function myFunction() {
+    var text1= $('#text1').val();
+    var text2= $('#text2').val();
+    $.ajax({
+    url: "/join",
+    type: "POST",
+    data: {text1:text1,
+    text2:text2}
+    }).done(function(response) {
+    var html= "<br><br><br><p> <b> RESULT : <b><p>";
+        response =response.result;
+        $.each(response,function(key,val){
+        html+="<p>"+val+"<p>"
+        });
+        html +="<br>";
+        $(".show-data").append(html);
+        });
+        };
+        </script>
+
+
+</body>
+
+</html>
